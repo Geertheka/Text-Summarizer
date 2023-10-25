@@ -1,102 +1,31 @@
 # Textify-A Text Preprocessing Web Application
 ## A text preprocessing web application which helps a user to get the summary of an Article and also a text generator which generates text based on user input
 
-### Technologies used
-+ [Flask](https://flask.palletsprojects.com/en/2.0.x/) (**A micro web Framework**)
-+ [nltk](https://www.nltk.org/) (**Python Library**)
-+ [Hugging Face GPT-2](https://huggingface.co/gpt2) (**For text generation**)
-+ [HTML,CSS,JS](https://www.w3schools.com/whatis/) (**Core technologies for building webpages**)
-+ [Python](https://www.python.org/) (**Programming language For Backend**)
-+ [Pytorch](https://pytorch.org/) (**For text generation**)
-+ [Tensorflow](https://www.tensorflow.org/) (**An end-to-end open source machine learning platform**)
----
-## Working of this application
-Firstly the Application is Command line based executable under Python Environment and uses popular Python micro web framework that is FLASK.This Application consist of 2 main pages runs in LocalHost wherein intially a form is given to the user based on the content entered and on submit by the user,Accordingly the Summarizied Content is analyzed with support and importing of some python packages.This data is exported to the next connecting page.
+### Understanding the Problem Statement
+Customer reviews can often be long and descriptive. Analyzing these reviews manually, as you can imagine, is really time-consuming. This is where the brilliance of Natural Language Processing can be applied to generate a summary for long reviews.
 
-**For text generation**
-Hugging Face is an NLP focused startup that shares a large open-source community and provides an open-source library for Natural Language Processing. Their core mode of operation for natural language processing revolves around the use of Transformers. This python based library exposes an API to use many well-known architectures that help obtain the state of the art results for various NLP tasks like text classification, information extraction, question answering, and text generation. All the architectures provided come with a set of pre-trained weights utilizing deep learning that help with ease of operation for such tasks.These transformer models come in different shape and size architectures and have their ways of accepting input data tokenization. A tokenizer takes an input word and encodes the word into a number, thus allowing faster processing.
+We will be working on a really cool dataset. Our objective here is to generate a summary for the Amazon Fine Food reviews using the abstraction-based approach we learned about above.
 
-**Tokenizer in Python**
-In both of the text processing part tokenizer is playing a vital role. In Python tokenization basically refers to splitting up a larger body of text into smaller lines, words or even creating words for a non-English language. The various tokenization functions in-built into the nltk module itself and can be used in programs as shown below.
- 
+### Understanding the Encoder-Decoder Architecture
+The Encoder-Decoder architecture is mainly used to solve the sequence-to-sequence (Seq2Seq) problems where the input and output sequences are of different lengths.
 
-## This Project Comprises of 3 Modules namely
-+ Landing Page
-+ Summarized Content as Output
-+ Text Generation as Output
+Let’s understand this from the perspective of text summarization. The input is a long sequence of words and the output will be a short version of the input sequence.
 
-Run the these Commands in the Windows Terminal:
+Generally, variants of Recurrent Neural Networks (RNNs), i.e. Gated Recurrent Neural Network (GRU) or Long Short Term Memory (LSTM), are preferred as the encoder and decoder components. This is because they are capable of capturing long term dependencies by overcoming the problem of vanishing gradient.
 
-**Note Before Running the text-summarisation run these commands**
+We can set up the Encoder-Decoder in 2 phases:
+Training phase
+Inference phase
+Let’s understand these concepts through the lens of an LSTM model.
 
-`pip install nlp`
+## Training phase
+In the training phase, we will first set up the encoder and decoder. We will then train the model to predict the target sequence offset by one timestep. Let us see in detail on how to set up the encoder and decoder.
 
-**For exporting and processing the data,run the following script in new .py file before ruuning the application as follows:**
+## Encoder
 
-```python
-   import nltk
-   nltk.download('stopwords')
-   nltk.download('word_tokenize')
-   nltk.download('sent_tokenize')
-```
-**In order to run and intialize the application there are 2 alternative methods:**
-+ Method - 1 : Run from Editor in venv and view localhost application in any Browser with link 
-(http://127.0.0.1:5000/)
-+ Method - 2 : Run from command prompt with specified path location of project by using following command
+An Encoder Long Short Term Memory model (LSTM) reads the entire input sequence wherein, at each timestep, one word is fed into the encoder. It then processes the information at every timestep and captures the contextual information present in the input sequence.
 
-```
- python __init__.py
-```
-**Landing Page**
+## Decoder
 
-![alt text](https://github.com/VivekChoudhary77/Textify-text-preprocessing/blob/master/Images/Screenshot%20(6).png)
+The decoder is also an LSTM network which reads the entire target sequence word-by-word and predicts the same sequence offset by one timestep. The decoder is trained to predict the next word in the sequence given the previous word.
 
-**Summarisation** (**Before Summarisation**)
-
-![alt text](https://github.com/VivekChoudhary77/Textify-text-preprocessing/blob/master/Images/Screenshot%20(7).png)
-
-**Output** (**Summarised content of Article**)
-
-![alt text](https://github.com/VivekChoudhary77/Textify-text-preprocessing/blob/master/Images/Screenshot%20(8).png)
-
----
-### For the Text generation Part
-
-**Run these commands before running the Text Generation**
-
-```python
- pip install tensorflow
- pip install transformers
- pip3 install torch torchvision torchaudio
-```
-
-**For Conda**
-
-`conda install pytorch torchvision torchaudio cpuonly -c pytorch`
-
-**Note : While Running the text generator part the model will automatically download the required files for text generator i.e. GPT2 Model**
-
-**Some terms and their meaning in the project**
-
-+ **_max_length_** : Outputs the no. of words you want to see while generating the text.
-+ **_input_ids_** : Indices of input sequence tokens in the vocabulary.
-+ **_pad_token_id_** : If a pad_token_id is defined in the configuration, it finds the last token that is not a padding token in each row.
-+ **_num_beans_** : bean search to find the next appropriate words in the sequence.
-+ **_no_repeat_ngram_size_** : Stops repeating certain sequences over and over again.(Basically it stops our model repeating words or sentences).
-+ **_early_stopping_** : if model does not genrates more or great output it generally stops generating the output.
-+ **_skip_special_tokens_** : always be **True** because we want to return sentences not the endofsentence tokens and other tokens we only want the words.
-+ **_return_tensors_** : 'pt' refers as pytorch tensors.
-
----
-
-**Text-Generator** (**landing page**)
-
-![alt_text](https://github.com/VivekChoudhary77/Textify-text-preprocessing/blob/master/Images/Screenshot%20(9).png)
-
-**Text-Generator** (**Output**)
-
-![alt_text](https://github.com/VivekChoudhary77/Textify-text-preprocessing/blob/master/Images/Screenshot%20(10).png)
-
----
-
-**_So here it Concludes the project by generating the output by matching the keywords what user has entered_.**
